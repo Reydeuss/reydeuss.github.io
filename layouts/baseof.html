@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ .Site.Params.description }}">
+  {{ with resources.Get "css/main.css" | minify }}<style>{{ .Content | safeCSS }}</style>{{ end }}
+</head>
+<body>
+  {{ block "nav" . }}<nav><a href="#about">About</a> <a href="#projects">Projects</a> <a href="#contact">Contact</a></nav>{{ end }}
+  <main>{{ block "main" . }}{{ end }}</main>
+</body>
+</html>

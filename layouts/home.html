@@ -1,0 +1,32 @@
+{{ define "main" }}
+<header>
+  <h1>{{ .Site.Title }}</h1>
+  {{ with .Site.Params.description }}<p class="tagline">{{ . }}</p>{{ end }}
+  {{ .Content }}
+</header>
+
+{{ with site.GetPage "/about" }}
+<section id="about">
+  <h2>{{ .Title }}</h2>
+  {{ .Content }}
+</section>
+{{ end }}
+
+<section id="projects">
+  <h2>Projects</h2>
+  {{ range (site.GetPage "/projects").Pages.ByWeight }}
+  <article>
+    <h3>{{ .Title }}</h3>
+    {{ .Content }}
+    {{ with .Params.repo }}<p><a href="{{ . }}">Source</a></p>{{ end }}
+  </article>
+  {{ end }}
+</section>
+
+<footer id="contact">
+  <h2>Contact</h2>
+  <p>
+    <a href="mailto:winsonamadeus.kusuma@gmail.com">Gmail</a> · <a href="https://github.com/Reydeuss">GitHub</a> · <a href="https://github.com/Reydeuss">LinkedIn</a>
+  </p>
+</footer>
+{{ end }}

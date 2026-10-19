@@ -1,0 +1,20 @@
+{{ define "title" }}404 · {{ site.Title }}{{ end }}
+
+{{ define "nav" }}
+<nav><a href="{{ site.BaseURL }}">Home</a></nav>
+{{ end }}
+
+{{ define "main" }}
+<header>
+  <h1>404</h1>
+  <p>Page not found.</p>
+</header>
+
+<section>
+  <h2>Lost?</h2>
+  <p>
+    The page you asked for doesn't exist. Everything that does is on the
+    <a href="{{ site.BaseURL }}">home page</a>: about, projects, and contact.
+  </p>
+</section>
+{{ end }}

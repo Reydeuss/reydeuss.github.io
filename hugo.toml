@@ -1,0 +1,7 @@
+baseURL = 'https://reydeuss.github.io/'
+locale = 'en-us'
+title = "Reydeuss"
+disableKinds = ["taxonomy", "term", "RSS"]
+
+[params]
+description = 'A computer science student fascinated with data, AI, and the sheer scale of it all.'

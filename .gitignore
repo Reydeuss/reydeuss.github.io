@@ -1,0 +1,31 @@
+# Hugo build output and caches
+/public/
+/resources/_gen/
+/resources/.gen/
+.hugo_build.lock
+*.hugo_build.lock
+
+# Netlify / CI local overrides
+.netlify/
+
+# Node tooling (if you add npm scripts later)
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Editor / OS cruft
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Cache dirs used by Tailwind/esbuild/postcss pipelines
+.cache/
+.tmp/
+
+# Vendored themes: uncomment if you install themes as git submodules
+# and don't want their files tracked in this repo
+# /themes/*
+# !/themes/.gitkeep

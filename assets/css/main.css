@@ -1,0 +1,229 @@
+/* assets/css/main.css
+   Swiss (International Typographic Style).
+   White paper base; three full-width fields in white ink:
+   Swiss-red title (A), black reading column (B, about + projects),
+   Swiss-red footer (C).
+   Hairline rules, Helvetica-only stack, fixed colours. No fonts or JS. */
+
+:root {
+  /* base: white paper, black ink */
+  --bg: #fff;
+  --fg: #000;
+
+  /* title field (A) */
+  --title-bg: #e30613;
+  --title-fg: #fff;
+
+  /* Projects field (B): shared by the about and projects sections */
+  --projects-bg: #121212;
+  --projects-fg: #fff;
+
+  /* footer field (C) */
+  --footer-bg: #e30613;
+  --footer-fg: #fff;
+
+  --sans: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  /* height reserved for the overlaid nav, so the header never collides with it */
+  --nav-h: 3.5rem;
+  --pad: clamp(1rem, 4vw, 3rem);
+  --gap: clamp(1rem, 2vw, 2rem);
+  /* side padding that keeps content within 80rem while backgrounds run full width */
+  --inset: max(var(--pad), calc((100% - 80rem) / 2 + var(--pad)));
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 1.0625rem/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; }
+
+/* Nav sits on top of the header field */
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  min-height: var(--nav-h);
+  padding: 0.5rem var(--inset);
+  color: var(--title-fg);
+  font-weight: 700;
+}
+
+/* Text */
+p {
+  margin: 0 0 1em;
+  max-width: 60ch;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  overflow-wrap: break-word;
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.22em;
+}
+a:hover { text-decoration-thickness: 0.2em; }
+a:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+nav a { padding-block: 0.5rem; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+
+/* Shared 12-column grid; backgrounds are full width, content stays inset */
+header, section, #contact {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  padding-inline: var(--inset);
+}
+
+/* Grid children may shrink below their content width */
+header > *, section > *, #contact > * { min-width: 0; }
+
+/* Header: Swiss-red field, the one loud element (A) */
+header {
+  padding-block: calc(var(--nav-h) + clamp(1.5rem, 6vw, 4.5rem)) clamp(2rem, 6vw, 5rem);
+  background: var(--title-bg);
+  color: var(--title-fg);
+}
+
+h1 {
+  grid-column: 1 / -1;
+  margin: 0 0 0.35em;
+  font-size: clamp(2.75rem, 14vw, 11rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+header > :not(h1) { grid-column: 4 / -1; }
+
+header > p:first-of-type:not(.tagline) {
+  max-width: 34ch;
+  font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* Tagline: the site description, right under the name (same lead treatment) */
+header > .tagline {
+  grid-column: 1 / -1; /* left edge aligns with the h1 */
+  max-width: 34ch;
+  font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* Hairline rule above each full-width field; future sections inherit it automatically */
+section,
+footer {
+  border-top: 1px solid currentColor;
+  scroll-margin-top: 1rem;
+}
+
+/* Sections: title in the left rail, content on the right */
+section { padding-block: 1.5rem 4rem; }
+
+/* Reading fields: black (B). About and Projects share one field so long-form
+   text stays on black between the red title and footer. */
+#about,
+#projects {
+  background: var(--projects-bg);
+  color: var(--projects-fg);
+}
+
+section > h2,
+#contact > h2 {
+  grid-column: 1 / 4;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+section > :not(h2),
+#contact > :not(h2) { grid-column: 4 / -1; }
+
+/* Projects */
+article {
+  padding-block: 1.25rem 2rem;
+  border-top: 1px solid currentColor;
+}
+article:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+}
+
+h3 {
+  margin: 0 0 0.35rem;
+  color: var(--projects-fg);
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+article small {
+  display: block;
+  color: var(--projects-fg);
+  font-size: 0.9375rem;
+}
+
+/* Contact: Swiss-red footer field (C) */
+#contact {
+  padding-block: 3rem 5rem;
+  background: var(--footer-bg);
+  color: var(--footer-fg);
+}
+
+/* Single column on small screens */
+@media (max-width: 48rem) {
+  header, section, #contact {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  header > :not(h1),
+  #contact > :not(h2),
+  #contact > h2,
+  section > :not(h2),
+  section > h2 { grid-column: 1 / -1; }
+
+  section > h2 { margin-bottom: 1.5rem; }
+}
+
+/* Very small screens: tighten gutters and block padding */
+@media (max-width: 30rem) {
+  :root { --pad: 1rem; }
+
+  header { padding-block-end: 1.5rem; }
+  section { padding-block: 1.25rem 3rem; }
+  article { padding-block: 1rem 1.5rem; }
+}
