@@ -203,6 +203,13 @@ article small {
   color: var(--footer-fg);
 }
 
+/* Copyright line: quieter than the contact links */
+#contact .rights {
+  margin-top: 1.5rem;
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
 /* Single column on small screens */
 @media (max-width: 48rem) {
   header, section, #contact {
