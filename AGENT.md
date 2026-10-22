@@ -11,7 +11,6 @@ Core principle: **as light as possible.** The author cares about the lightweight
 ## Hard constraints
 
 - **No JavaScript** *by default*. No frameworks, no bundlers, no Node toolchain. Ask before adding any script. Prefer HTML/CSS solutions (`prefers-color-scheme`, `<details>`, `scroll-behavior`, `loading="lazy"`).
-<!-- - **No themes.** Templates are hand-written and small. TODO -->
 - **Accessibility:** semantic HTML, one `h1`, `lang` attribute, AA contrast in light and dark, visible focus states, content readable with CSS disabled.
 - Do not add dependencies, plugins, or Hugo modules without confirming with the user first.
 
@@ -20,7 +19,6 @@ Core principle: **as light as possible.** The author cares about the lightweight
 - Generator: **Hugo** (extended not required). Pin the exact version in CI.
 - Hosting: GitHub Pages, deployed by a GitHub Actions workflow (Settings > Pages > Source: GitHub Actions). Workflow installs the pinned Hugo binary, runs `hugo --gc --minify`, uploads `public/`.
 - **One page only, for now.** Sections are anchors: `#about`, `#projects`, `#cv`, `#contact`. No per-project pages, no list pages, no taxonomies.
-- Considered and rejected: Svelte/SvelteKit SPA (ships JS, needs JS to render, no benefit for static content), Zola, Eleventy.
 
 ## Repository layout
 
@@ -35,17 +33,9 @@ content/
 layouts/
   baseof.html                # <head>, nav, main block
   home.html                  # the only content template
+  partials/project.html      # one project article: h3, stack line, content, source link
 assets/css/main.css          # processed, minified, inlined into <head>
 .github/workflows/hugo.yml
-```
-
-`hugo.toml` essentials:
-
-```toml
-baseURL = "https://<username>.github.io/"
-languageCode = "en"
-title = "Edel"
-disableKinds = ["taxonomy", "term", "RSS"]
 ```
 
 If project pages stop being available to the template, `"section"` must not be in `disableKinds`.
@@ -78,24 +68,13 @@ Each file in `content/projects/` uses this front matter:
 
 ```toml
 +++
-title = "Rebecca"
-repo = "https://github.com/Reydeuss/rebecca"
-stack = "Python, fastembed, DBSCAN"
+title = ""
+repo = ""
+stack = ""
 weight = 1
 +++
 Two or three sentences. Problem, approach, result.
 ```
-
-Order (by `weight`): rebecca, trustify, bouncer, aksikita, luhn-checker, recon.
-
-| Repo | Stack | What it is |
-|---|---|---|
-| rebecca | Python, fastembed, DBSCAN | Clusters Hacker News top stories by meaning, not keywords |
-| trustify | Python, T5, PEFT | Parameter-efficient fine-tuning of T5 for Indonesian abstractive summarization of news |
-| bouncer | Go, Svelte | Teaching-oriented real-time chat server demonstrating async mailbox synchronization |
-| aksikita | Vue | Location-based civic tech platform where communities report local issues and volunteers coordinate action |
-| luhn-checker | Go | Dependency-free REST API and web UI validating ID numbers (cards, IMEI) with the Luhn algorithm, Clean Architecture |
-| recon | Java | Financial data reconciliation with stream processing and atomic persistence (learning project) |
 
 Repo URL pattern: `https://github.com/Reydeuss/<name>`.
 
@@ -103,7 +82,9 @@ Repo URL pattern: `https://github.com/Reydeuss/<name>`.
 
 ## Templates
 
-`home.html` renders, in order: a `<header>` with `<h1>` (site title) and `.Content` of `_index.md`; `<section id="about">` reading `content/about.md` via `site.GetPage`, rendering its title in the left rail and its content on the right; `<section id="projects">` looping `site.GetPage "/projects"` pages by weight, each as an `<article>` with `<h3>`, a `<small>` stack line, the content, and a source link; a `<section id="cv">` linking to the CV; a `<footer id="contact">` with email and GitHub links. Contact email is a placeholder (`you@example.com`) until the author supplies it. The CV link is a placeholder (marked `TODO` in `home.html`) until the author supplies the file or URL.
+`home.html` renders, in order: a `<header>` with `<h1>` (site title) and `.Content` of `_index.md`; `<section id="about">` reading `content/about.md` via `site.GetPage`, rendering its title in the left rail and its content on the right; `<section id="projects">` looping `site.GetPage "/projects"` pages by weight and calling `partials/project.html` for each; a `<section id="cv">` linking to the CV; a `<footer id="contact">` with email and GitHub links.
+
+`partials/project.html` receives the page and renders one `<article>` with an `<h3>` title, a `<small>` stack line from `.Params.stack`, the content, and a source link from `.Params.repo`.
 
 `baseof.html` has a `<nav>` linking to the section anchors and `<main>` containing the block. Include `<meta name="viewport">`, `<meta name="color-scheme" content="light">`, a description meta, and optionally `<meta name="theme-color" content="#000000">`.
 
@@ -132,7 +113,7 @@ hugo server            # local dev
 hugo --gc --minify     # production build, same as CI
 ```
 
-Verify before finishing a change: build passes with no warnings, `public/` contains only the expected files, no external URLs appear in `public/index.html` other than the author's own links, and the page is under the size budget. Run Lighthouse when changing CSS or markup.
+Verify before finishing a change: build passes with no warnings, `public/` contains only the expected files, no external URLs appear in `public/index.html` other than the author's own links, and the page is under the size budget.
 
 ## Working style
 
