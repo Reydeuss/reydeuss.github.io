@@ -15,11 +15,7 @@
 <section id="projects">
   <h2>Projects</h2>
   {{ range (site.GetPage "/projects").Pages.ByWeight }}
-  <article>
-    <h3>{{ .Title }}</h3>
-    {{ .Content }}
-    {{ with .Params.repo }}<p><a href="{{ . }}">Source</a></p>{{ end }}
-  </article>
+  {{ partial "project.html" . }}
   {{ end }}
 </section>
 

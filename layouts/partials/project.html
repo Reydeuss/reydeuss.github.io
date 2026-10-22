@@ -1,0 +1,11 @@
+{{/*
+  Renders one project article.
+  Expects dot: a page from content/projects/ with the front-matter contract:
+  title, repo, stack, weight.
+*/}}
+<article>
+  <h3>{{ .Title }}</h3>
+  {{ with .Params.stack }}<small>{{ . }}</small>{{ end }}
+  {{ .Content }}
+  {{ with .Params.repo }}<p><a href="{{ . }}">Source</a></p>{{ end }}
+</article>

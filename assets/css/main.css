@@ -180,6 +180,7 @@ h3 {
 article small {
   display: block;
   font-size: 0.9375rem;
+  margin: 0 0 1rem;
 }
 
 /* Contact: reversed footer field (C), white ink on near-black */
