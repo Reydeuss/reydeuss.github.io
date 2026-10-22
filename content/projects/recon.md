@@ -1,7 +1,7 @@
 +++
 title = "Recon"
 repo = "https://github.com/Reydeuss/recon"
-stack = "Java"
+stack = "Java, Maven"
 weight = 6
 +++
 Financial data reconciliation using stream processing and atomic persistence, built as a learning project for Java.
