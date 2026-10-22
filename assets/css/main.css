@@ -1,25 +1,21 @@
 /* assets/css/main.css
    Swiss (International Typographic Style).
-   White paper base; three full-width fields in white ink:
-   Swiss-red title (A), black reading column (B, about + projects),
-   Swiss-red footer (C).
-   Hairline rules, Helvetica-only stack, fixed colours. No fonts or JS. */
+   Swiss-red hero (A); black-on-white reading fields (B: about, projects, CV);
+   reversed white-on-near-black footer (C).
+   Black hairlines on white fields, Helvetica-only stack, fixed colours.
+   No fonts or JS. */
 
 :root {
   /* base: white paper, black ink */
   --bg: #fff;
   --fg: #000;
 
-  /* title field (A) */
+  /* hero field (A): the one red surface */
   --title-bg: #e30613;
   --title-fg: #fff;
 
-  /* Projects field (B): shared by the about and projects sections */
-  --projects-bg: #121212;
-  --projects-fg: #fff;
-
-  /* footer field (C) */
-  --footer-bg: #e30613;
+  /* footer field (C): reversed, white ink on near-black */
+  --footer-bg: #121212;
   --footer-fg: #fff;
 
   --sans: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
@@ -140,23 +136,15 @@ header > .tagline {
   letter-spacing: -0.01em;
 }
 
-/* Hairline rule above each full-width field; future sections inherit it automatically */
+/* Black hairline above each white section; the black footer needs no rule */
+section { border-top: 1px solid currentColor; }
 section,
-footer {
-  border-top: 1px solid currentColor;
-  scroll-margin-top: 1rem;
-}
+footer { scroll-margin-top: 1rem; }
 
 /* Sections: title in the left rail, content on the right */
 section { padding-block: 1.5rem 4rem; }
 
-/* Reading fields: black (B). About and Projects share one field so long-form
-   text stays on black between the red title and footer. */
-#about,
-#projects {
-  background: var(--projects-bg);
-  color: var(--projects-fg);
-}
+/* Reading fields (B): About, Projects, and CV sit on the white paper in black ink */
 
 section > h2,
 #contact > h2 {
@@ -182,7 +170,6 @@ article:first-of-type {
 
 h3 {
   margin: 0 0 0.35rem;
-  color: var(--projects-fg);
   font-size: clamp(1.75rem, 4.5vw, 3rem);
   font-weight: 700;
   line-height: 1.05;
@@ -192,11 +179,10 @@ h3 {
 
 article small {
   display: block;
-  color: var(--projects-fg);
   font-size: 0.9375rem;
 }
 
-/* Contact: Swiss-red footer field (C) */
+/* Contact: reversed footer field (C), white ink on near-black */
 #contact {
   padding-block: 3rem 5rem;
   background: var(--footer-bg);

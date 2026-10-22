@@ -4,6 +4,4 @@ repo = "https://github.com/Reydeuss/bouncer"
 stack = "Go, Svelte"
 weight = 3
 +++
-A teaching-oriented real-time chat server. A Go backend demonstrates async mailbox synchronization, with a decoupled Svelte frontend.
-
-TODO: the one design decision you'd want a reader to notice.
+A teaching-oriented real-time chat server. A Go backend demonstrates async mailbox synchronization, with a decoupled Svelte frontend. Go and Svelte were chosen to experiment with alternative, performant-oriented language & framework.

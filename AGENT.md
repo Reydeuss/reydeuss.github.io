@@ -19,7 +19,7 @@ Core principle: **as light as possible.** The author cares about the lightweight
 
 - Generator: **Hugo** (extended not required). Pin the exact version in CI.
 - Hosting: GitHub Pages, deployed by a GitHub Actions workflow (Settings > Pages > Source: GitHub Actions). Workflow installs the pinned Hugo binary, runs `hugo --gc --minify`, uploads `public/`.
-- **One page only, for now.** Sections are anchors: `#about`, `#projects`, `#contact`. No per-project pages, no list pages, no taxonomies.
+- **One page only, for now.** Sections are anchors: `#about`, `#projects`, `#cv`, `#contact`. No per-project pages, no list pages, no taxonomies.
 - Considered and rejected: Svelte/SvelteKit SPA (ships JS, needs JS to render, no benefit for static content), Zola, Eleventy.
 
 ## Repository layout
@@ -103,7 +103,7 @@ Repo URL pattern: `https://github.com/Reydeuss/<name>`.
 
 ## Templates
 
-`home.html` renders, in order: a `<header>` with `<h1>` (site title) and `.Content` of `_index.md`; `<section id="about">` reading `content/about.md` via `site.GetPage`, rendering its title in the left rail and its content on the right; `<section id="projects">` looping `site.GetPage "/projects"` pages by weight, each as an `<article>` with `<h3>`, a `<small>` stack line, the content, and a source link; a `<footer id="contact">` with email and GitHub links. Contact email is a placeholder (`you@example.com`) until the author supplies it.
+`home.html` renders, in order: a `<header>` with `<h1>` (site title) and `.Content` of `_index.md`; `<section id="about">` reading `content/about.md` via `site.GetPage`, rendering its title in the left rail and its content on the right; `<section id="projects">` looping `site.GetPage "/projects"` pages by weight, each as an `<article>` with `<h3>`, a `<small>` stack line, the content, and a source link; a `<section id="cv">` linking to the CV; a `<footer id="contact">` with email and GitHub links. Contact email is a placeholder (`you@example.com`) until the author supplies it. The CV link is a placeholder (marked `TODO` in `home.html`) until the author supplies the file or URL.
 
 `baseof.html` has a `<nav>` linking to the section anchors and `<main>` containing the block. Include `<meta name="viewport">`, `<meta name="color-scheme" content="light">`, a description meta, and optionally `<meta name="theme-color" content="#000000">`.
 
@@ -114,12 +114,12 @@ Repo URL pattern: `https://github.com/Reydeuss/<name>`.
 - **Layout:** 12-column grid. Section titles in the left rail (columns 1-3), content in columns 4-12. Single column below 48rem. Backgrounds run full width; content stays within 80rem via the `--inset` variable.
 - **Type:** one sans family (Helvetica and its metric substitutes; no system-ui fallback). Hierarchy from size, weight, and tight tracking. Flush-left, ragged-right. Body about 17px, 1.5 line height, 60ch max measure. Large header name (up to 11rem).
 - **No** cards, shadows, border radius, icons, gradients, or decorative elements. Rules (borders) and whitespace do the structuring.
-- **Colour (Swiss red and black; three fields, white ink):**
-  - Title screen: full-width Swiss-red field (`#e30613`) with a white name, nav overlaid in white.
-  - Reading column: full-width black field (`#121212`) with white text, section titles, and hairlines. Shared by the About and Projects sections.
-  - Footer: full-width Swiss-red field (`#e30613`) with white text.
-  - There is no separate accent colour: red is used only as the short title and footer fields, keeping the long reading column on black for contrast. Links/borders use `currentColor` so they take their field's ink.
-  - All outlines are hairlines: `1px solid currentColor` on sections and between projects. No heavy bars.
+- **Colour (black on white; one red field and one reversed field):**
+  - Hero: full-width Swiss-red field (`#e30613`) with white ink, nav overlaid in white. This is the only red surface.
+  - Reading column: white paper (`#fff`) with black ink for the About, Projects, and CV sections. Section titles and hairlines are black.
+  - Footer: reversed field, white ink on near-black (`#121212`), with no rule above it; the colour change marks the end of the page.
+  - Links/borders use `currentColor` so they take their field's ink: black on the white reading column, white on the hero and footer.
+  - All outlines are hairlines: `1px solid currentColor` above sections and between projects. No heavy bars.
   - Colours are fixed; the page declares `<meta name="color-scheme" content="light">` and no dark-mode overrides exist.
 - **Rejected:** per-category colour coding of projects. Do not colour projects by type. Do not add numerals to projects (they are not a sequence).
 - Colours that appear as text must meet AA contrast. Yellow is not usable as text on light backgrounds.
