@@ -2,10 +2,11 @@
   Renders one project article.
   Expects dot: a page from content/projects/ with the front-matter contract:
   title, repo, stack, weight.
+  Stack is comma-separated in front matter; rendered uppercase with interpuncts.
 */}}
 <article>
   <h3>{{ .Title }}</h3>
-  {{ with .Params.stack }}<small>{{ . }}</small>{{ end }}
+  {{ with .Params.stack }}<small>{{ delimit (split . ", ") " · " }}</small>{{ end }}
   {{ .Content }}
   {{ with .Params.repo }}<p><a href="{{ . }}">Source</a></p>{{ end }}
 </article>

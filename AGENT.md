@@ -33,7 +33,7 @@ content/
 layouts/
   baseof.html                # <head>, nav, main block
   home.html                  # the only content template
-  partials/project.html      # one project article: h3, stack line, content, source link
+  partials/project.html      # one project article: h3, uppercase stack label, content, source link
 assets/css/main.css          # processed, minified, inlined into <head>
 .github/workflows/hugo.yml
 ```
@@ -84,7 +84,7 @@ Repo URL pattern: `https://github.com/Reydeuss/<name>`.
 
 `home.html` renders, in order: a `<header>` with `<h1>` (site title) and `.Content` of `_index.md`; `<section id="about">` reading `content/about.md` via `site.GetPage`, rendering its title in the left rail and its content on the right; `<section id="projects">` looping `site.GetPage "/projects"` pages by weight and calling `partials/project.html` for each; a `<section id="cv">` linking to the CV; a `<footer id="contact">` with email and GitHub links.
 
-`partials/project.html` receives the page and renders one `<article>` with an `<h3>` title, a `<small>` stack line from `.Params.stack`, the content, and a source link from `.Params.repo`.
+`partials/project.html` receives the page and renders one `<article>` with an `<h3>` title, an uppercase `<small>` stack label from `.Params.stack` (comma-separated in front matter, interpuncts in output), the content, and a source link from `.Params.repo`.
 
 `baseof.html` has a `<nav>` linking to the section anchors and `<main>` containing the block. Include `<meta name="viewport">`, `<meta name="color-scheme" content="light">`, a description meta, and optionally `<meta name="theme-color" content="#000000">`.
 
