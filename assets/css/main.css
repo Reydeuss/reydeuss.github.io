@@ -1,16 +1,18 @@
 /* assets/css/main.css
-   Swiss (International Typographic Style).
-   Swiss-red hero (A); black-on-white reading fields (B: about, projects, CV);
-   reversed white-on-near-black footer (C).
-   Black hairlines on white fields, Helvetica-only stack, fixed colours.
-   No fonts or JS. */
+   Swiss (International Typographic Style) fused with pure brutalist structure.
+   Green hero field (A) with its 12 columns exposed as faint lines; black-on-white
+   reading fields (B: about, projects, CV); reversed white-on-near-black footer (C).
+   Slab-weight rules instead of hairlines; solid inverted slabs instead of borders
+   or shadows; instant flat colour inversion is the only interaction language —
+   no fake depth, no soft gradients, no motion.
+   Helvetica-only stack, fixed colours. No fonts or JS. */
 
 :root {
   /* base: white paper, black ink */
   --bg: #fff;
   --fg: #000;
 
-  /* hero field (A): the one red surface */
+  /* hero field (A): the one loud surface */
   --title-bg: #123524;
   --title-fg: #fff;
 
@@ -23,6 +25,8 @@
   --nav-h: 3.5rem;
   --pad: clamp(1rem, 4vw, 3rem);
   --gap: clamp(1rem, 2vw, 2rem);
+  /* slab weight of every structural rule */
+  --rule: 3px;
   /* side padding that keeps content within 80rem while backgrounds run full width */
   --inset: max(var(--pad), calc((100% - 80rem) / 2 + var(--pad)));
 }
@@ -57,11 +61,14 @@ nav {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
+  gap: 0.5rem 2rem;
   min-height: var(--nav-h);
   padding: 0.5rem var(--inset);
   color: var(--title-fg);
   font-weight: 700;
+  /* Overlays the hero field, so it carries the hero's inversion pair */
+  --inv-bg: var(--title-fg);
+  --inv-fg: var(--title-bg);
 }
 
 /* Text */
@@ -80,14 +87,25 @@ a {
   text-decoration-thickness: 0.12em;
   text-underline-offset: 0.22em;
 }
-a:hover { text-decoration-thickness: 0.2em; }
+/* Only interaction language: instant flat inversion — no shadows, no motion,
+   no fake depth. Inline links highlight as a solid block. Two variables per
+   field declare the pair (see header, section, #contact). */
+a:hover, a:focus-visible {
+  background: var(--inv-bg, var(--fg));
+  color: var(--inv-fg, var(--bg));
+  text-decoration: none;
+}
 a:focus-visible {
   outline: 3px solid currentColor;
   outline-offset: 3px;
 }
 
-nav a { padding-block: 0.5rem; text-decoration: none; }
-nav a:hover { text-decoration: underline; }
+nav a {
+  padding: 0.5rem 0.75rem;
+  /* offset the horizontal padding so text stays flush with the inset */
+  margin-inline: -0.75rem;
+  text-decoration: none;
+}
 
 /* Shared 12-column grid; backgrounds are full width, content stays inset */
 header, section, #contact {
@@ -100,11 +118,20 @@ header, section, #contact {
 /* Grid children may shrink below their content width */
 header > *, section > *, #contact > * { min-width: 0; }
 
-/* Header: Swiss-red field, the one loud element (A) */
+/* Hero field: the one loud element (A), with its 12 columns exposed as
+   faint hard-edged lines through the whole field */
 header {
   padding-block: calc(var(--nav-h) + clamp(1.5rem, 6vw, 4.5rem)) clamp(2rem, 6vw, 5rem);
-  background: var(--title-bg);
+  background-color: var(--title-bg);
+  background-image: repeating-linear-gradient(
+    to right,
+    rgb(255 255 255 / 0.15) 0 1px,
+    transparent 1px calc(100% / 12)
+  );
   color: var(--title-fg);
+  /* inversion pair: white slab, green ink */
+  --inv-bg: var(--title-fg);
+  --inv-fg: var(--title-bg);
 }
 
 h1 {
@@ -136,8 +163,13 @@ header > .tagline {
   letter-spacing: -0.01em;
 }
 
-/* Black hairline above each white section; the black footer needs no rule */
-section { border-top: 1px solid currentColor; }
+/* Slab rule above each white section; the black footer needs no rule */
+section {
+  border-top: var(--rule) solid currentColor;
+  /* inversion pair: black slab, white ink */
+  --inv-bg: var(--fg);
+  --inv-fg: var(--bg);
+}
 section,
 footer { scroll-margin-top: 1rem; }
 
@@ -161,7 +193,7 @@ section > :not(h2),
 /* Projects */
 article {
   padding-block: 1.25rem 2rem;
-  border-top: 1px solid currentColor;
+  border-top: var(--rule) solid currentColor;
 }
 article:first-of-type {
   padding-top: 0;
@@ -177,6 +209,7 @@ h3 {
   text-wrap: balance;
 }
 
+/* Stack label: plain uppercase meta line */
 article small {
   display: block;
   font-size: 0.75rem;
@@ -185,11 +218,30 @@ article small {
   margin: 0 0 1rem;
 }
 
+/* CTA: solid inverted slab at rest, outline slab on hover — a flat state
+   toggle, no fake depth */
+#cv p a {
+  display: inline-block;
+  padding: 0.5em 1.1em;
+  border: var(--rule) solid var(--fg);
+  background: var(--inv-bg);
+  color: var(--inv-fg);
+  text-decoration: none;
+}
+
+#cv p a:hover,
+#cv p a:focus-visible {
+  background: transparent;
+  color: var(--fg);
+}
+
 /* Contact: reversed footer field (C), white ink on near-black */
 #contact {
   padding-block: 3rem 5rem;
   background: var(--footer-bg);
   color: var(--footer-fg);
+  --inv-bg: var(--footer-fg);
+  --inv-fg: var(--footer-bg);
 }
 
 /* Copyright line: quieter than the contact links */
